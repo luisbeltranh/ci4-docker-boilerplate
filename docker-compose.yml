@@ -1,0 +1,54 @@
+services:
+  php-apache:
+    build:
+      context: .
+      dockerfile: php/Dockerfile
+    container_name: mi_proyecto_php_apache
+    volumes:
+      - ./src:/var/www/html
+      - ./apache/sites-available/000-default.conf:/etc/apache2/sites-available/000-default.conf
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    depends_on:
+      - mysql-db
+    networks:
+      - mi_red
+
+  mysql-db:
+    image: mysql:8.0
+    container_name: mi_proyecto_mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cidb
+      MYSQL_USER: luis
+      MYSQL_PASSWORD: luis
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - mi_red
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: mi_proyecto_phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    environment:
+      - PMA_HOST=mysql-db
+      - PMA_PORT=3306
+    networks:
+      - mi_red
+    depends_on:
+      - mysql-db
+
+volumes:
+  db_data:
+
+networks:
+  mi_red:
+    driver: bridge

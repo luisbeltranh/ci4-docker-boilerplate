@@ -1,0 +1,12 @@
+# Archivos de Sistema
+.DS_Store
+Thumbs.db
+
+# Docker
+# Ignorar la carpeta de la base de datos si se monta localmente
+db_data/
+
+# CodeIgniter - Archivos sensibles y generados
+src/.env
+src/vendor/
+src/writable/
