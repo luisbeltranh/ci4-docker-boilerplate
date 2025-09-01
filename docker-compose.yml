@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: php/Dockerfile
-    container_name: mi_proyecto_php_apache
+    container_name: tree_factory_php_apache
     volumes:
       - ./src:/var/www/html
       - ./apache/sites-available/000-default.conf:/etc/apache2/sites-available/000-default.conf
@@ -17,7 +17,7 @@ services:
 
   mysql-db:
     image: mysql:8.0
-    container_name: mi_proyecto_mysql
+    container_name: tree_factory_mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: unless-stopped
     environment:
@@ -34,7 +34,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin:latest
-    container_name: mi_proyecto_phpmyadmin
+    container_name: tree_factory_phpmyadmin
     restart: unless-stopped
     ports:
       - "8081:80"
